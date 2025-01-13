@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DopLaba")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c1f1d9dd4b89b4a1caac4bfbd7c56493306b271")]
 [assembly: System.Reflection.AssemblyProductAttribute("DopLaba")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DopLaba")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
