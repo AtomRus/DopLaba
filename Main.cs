@@ -179,7 +179,9 @@ namespace DopLaba1
                         try
                         {
                             MAIN_STORE.AddContainer(LIST_GROUND_CONTAINERS.GetList()[INDEX_CURSOR]);
+                            LIST_GROUND_CONTAINERS.GetList().Remove(LIST_GROUND_CONTAINERS.GetList()[INDEX_CURSOR]);
                             MAIN_STORE.UpdateDataWitdth();
+                            MAIN_STORE.UpdateData();
 
                         }
                         catch (Exception e)
@@ -587,7 +589,7 @@ namespace DopLaba1
                                                 flagName = true;
                                             }
                                         }
-                                        foreach (MyContainer myContainer1 in Store.LIST_OF_CONTAINERS)
+                                        foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
                                         {
                                             if (myContainer1.GetName() == name)
                                             {
@@ -773,7 +775,7 @@ namespace DopLaba1
                             }
                             if (EXISTENCE_STORE)
                             {
-                                foreach (MyContainer myContainer1 in Store.LIST_OF_CONTAINERS)
+                                foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
                                 {
                                     if (myContainer1.GetName() == name)
                                     {
@@ -817,6 +819,9 @@ namespace DopLaba1
                             Console.WriteLine(INDEX_CURSOR);
                             LIST_GROUND_CONTAINERS.GetList()[j].AddBox(LIST_GROUND_BOXES.GetList()[INDEX_CURSOR]);
                             LIST_GROUND_CONTAINERS.UpdateDataWitdth();
+                            LIST_GROUND_CONTAINERS.UpdateData();
+                            LIST_GROUND_BOXES.GetList().Remove(LIST_GROUND_BOXES.GetList()[INDEX_CURSOR]);
+
                             }
                             catch (Exception e)
                             {
@@ -876,7 +881,7 @@ namespace DopLaba1
                                     }
                                     if (EXISTENCE_STORE)
                                     {
-                                        foreach (MyContainer myContainer1 in Store.LIST_OF_CONTAINERS)
+                                        foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
                                         {
                                             if (myContainer1.GetName() == name1)
                                             {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\TestDopLaba\\DopLaba.csproj": {}
+    "D:\\C#\\Goida\\DopLaba.csproj": {}
   },
   "projects": {
-    "D:\\C#\\TestDopLaba\\DopLaba.csproj": {
+    "D:\\C#\\Goida\\DopLaba.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\TestDopLaba\\DopLaba.csproj",
+        "projectUniqueName": "D:\\C#\\Goida\\DopLaba.csproj",
         "projectName": "DopLaba",
-        "projectPath": "D:\\C#\\TestDopLaba\\DopLaba.csproj",
+        "projectPath": "D:\\C#\\Goida\\DopLaba.csproj",
         "packagesPath": "C:\\Users\\mrvan\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\TestDopLaba\\obj\\",
+        "outputPath": "D:\\C#\\Goida\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mrvan\\AppData\\Roaming\\NuGet\\NuGet.Config"

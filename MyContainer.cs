@@ -53,11 +53,16 @@ namespace DopLaba1
             this.countBoxs = countBoxs;
 
         }
+        public void UpdateData()
+        {
+            sumMassOfBox = CountSumMass(listOfBox);
+        }
         
-        public MyContainer(int countBoxs, List<BoxOfVegetables> listOfBox, string name) 
+        public MyContainer(int countBoxs, List<BoxOfVegetables> list, string name) 
         {
             this.countBoxs = countBoxs;
             this.name = name;
+            listOfBox = list;
         }
         public MyContainer() {
             this.countBoxs = 0;
@@ -71,7 +76,7 @@ namespace DopLaba1
                 sum = sum + box.GetMass();
             }
             return sum;
-        }
+        } 
         public void AddBox(BoxOfVegetables box)
         {
             listOfBox.Add(box);
