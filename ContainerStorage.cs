@@ -5,7 +5,7 @@ namespace DopLaba1
         /*Task 06.01.2025
         Внедрить зависимости хранилищ в адаптеры, в художнике должен быть только адаптер
         */
-        public static List<MyContainer> LIST_OF_CONTAINERS = new List<MyContainer>();
+        public List<MyContainer> LIST_OF_CONTAINERS = new List<MyContainer>();
         private int maxNamewitdth = 0;
         private int maxCountBoxwitdth = 0;
         private int maxPrioritywitdth = 0;
@@ -55,7 +55,14 @@ namespace DopLaba1
         {
             maxMasswitdth = 16;
         }
-
+        
+    }
+    public void UpdateData()
+    {
+        foreach (MyContainer myContainer in LIST_OF_CONTAINERS)
+        {
+            myContainer.UpdateData();
+        }
     }
 
     /*private void ShowPage(int idPage, int k)
