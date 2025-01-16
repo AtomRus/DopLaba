@@ -61,8 +61,8 @@ namespace DopLaba1
             Console.WriteLine(TASK_TEXT);
 
             GraphEngine graphEngine = new GraphEngine();
+            Facade MAIN_FACADE = new Facade();
             ConsoleKey KEY_FROM_KEYBOARD;
-            Store MAIN_STORE = new Store();
             bool EXISTENCE_STORE = false;
             ContainerStorage LIST_GROUND_CONTAINERS = new ContainerStorage();
             BoxStorage LIST_GROUND_BOXES = new BoxStorage();
@@ -108,6 +108,7 @@ namespace DopLaba1
                             break;
                         }
                         Console.WriteLine("Создание склада!");
+                        Store MAIN_STORE = new Store();
                         int capacityStore;
                         double maxStoreMass;
                         double rentalPriceStore;
@@ -160,6 +161,7 @@ namespace DopLaba1
                         MAIN_STORE.SetMaxNumOfContainer(capacityStore);
                         MAIN_STORE.SetMaxStoreMass(maxStoreMass);
                         MAIN_STORE.SetRentalPrice(rentalPriceStore);
+                        MAIN_FACADE.SetStore(MAIN_STORE);
                         Console.WriteLine("Склад успешно создан!\nОбъем склада: " + capacityStore + "(шт)\nМаксимальная масса: " + maxStoreMass + "(кг)\nЦена аренду: " + rentalPriceStore + "(руб)");
                         EXISTENCE_STORE = true;
                         break;
@@ -178,10 +180,9 @@ namespace DopLaba1
                         INDEX_CURSOR = graphEngine.SelectElementFromTheStore(LIST_GROUND_CONTAINERS);
                         try
                         {
-                            MAIN_STORE.AddContainer(LIST_GROUND_CONTAINERS.GetList()[INDEX_CURSOR]);
+                            MAIN_FACADE.TryAddContainer(LIST_GROUND_CONTAINERS.GetList()[INDEX_CURSOR]);
                             LIST_GROUND_CONTAINERS.GetList().Remove(LIST_GROUND_CONTAINERS.GetList()[INDEX_CURSOR]);
-                            MAIN_STORE.UpdateDataWitdth();
-                            MAIN_STORE.UpdateData();
+                            MAIN_FACADE.UpdateData();
 
                         }
                         catch (Exception e)
@@ -198,7 +199,7 @@ namespace DopLaba1
                         Console.WriteLine("Выберите контейнер, который вы хотите удалить");
                         Console.WriteLine();
                         INDEX_CURSOR = graphEngine.SelectElementFromTheStore(LIST_GROUND_CONTAINERS);
-                        MAIN_STORE.RemoveContainer(INDEX_CURSOR);
+                        MAIN_FACADE.RemoveContainer(INDEX_CURSOR);
                         break;
                     case 4:
                         if (!EXISTENCE_STORE)
@@ -206,7 +207,7 @@ namespace DopLaba1
                             Console.WriteLine("Отклонение запроса! Не был создан склад!");
                             break;
                         }
-                        if (MAIN_STORE.GetList().Count == 0)
+                        if (MAIN_FACADE.GetList().Count == 0)
                         {
                             Console.WriteLine("Отклонение запроса! На складе ничего нету!");
                             break;
@@ -225,7 +226,7 @@ namespace DopLaba1
                         switch (INDEX_CURSOR)
                         {
                             case 1:
-                            if (MAIN_STORE.GetList().Count == 0)
+                            if (MAIN_FACADE.GetList().Count == 0)
                             {
                                 Console.WriteLine("На складе ничего нет!");
                                 break;
@@ -235,11 +236,11 @@ namespace DopLaba1
                             {
                                 
                                 flag = false;
-                                int j = graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                                int j = graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                                 if (j >= 0)
                                 {
                                     Console.WriteLine(j);
-                                    int id = graphEngine.SelectElementFromTheStore(MAIN_STORE.GetContainer(j));
+                                    int id = graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore().GetContainer(j));
                                     if (id == -2)
                                     {
                                         flag = true;
@@ -251,7 +252,7 @@ namespace DopLaba1
                             Console.WriteLine("Введите имя контейнера");
                             string userData6 = Console.ReadLine();
                             List<MyContainer> sortList = new List<MyContainer>();
-                            foreach (MyContainer myContainer in MAIN_STORE.GetList())
+                            foreach (MyContainer myContainer in MAIN_FACADE.GetList())
                             {
                                 if (myContainer.GetName() == userData6)
                                 {
@@ -287,7 +288,7 @@ namespace DopLaba1
                             }
                             while (countFind < 0);
                             List<MyContainer> sortList1 = new List<MyContainer>();
-                            foreach (MyContainer myContainer in MAIN_STORE.GetList())
+                            foreach (MyContainer myContainer in MAIN_FACADE.GetList())
                             {
                                 if (myContainer.GetCountBoxs() == countFind)
                                 {
@@ -324,7 +325,7 @@ namespace DopLaba1
                             }
                             while (priorityFind < 0);
                             List<MyContainer> sortList2 = new List<MyContainer>();
-                            foreach (MyContainer myContainer in MAIN_STORE.GetList())
+                            foreach (MyContainer myContainer in MAIN_FACADE.GetList())
                             {
                                 if (myContainer.GetPriority() == priorityFind)
                                 {
@@ -360,7 +361,7 @@ namespace DopLaba1
                             }
                             while (massFind < 0);
                             List<MyContainer> sortList3 = new List<MyContainer>();
-                            foreach (MyContainer myContainer in MAIN_STORE.GetList())
+                            foreach (MyContainer myContainer in MAIN_FACADE.GetList())
                             {
                                 if (myContainer.GetSumMassOfBox() == massFind)
                                 {
@@ -406,20 +407,20 @@ namespace DopLaba1
                 switch (INDEX_CURSOR)
                 {
                     case 1:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareAlphabetRevers());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareAlphabetRevers());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 2:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareCountBoxRevers());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareCountBoxRevers());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 3:
-                    MAIN_STORE.GetList().Sort(new ContainerComparePriorityRevers());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerComparePriorityRevers());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 4:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareDoubleRevers());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareDoubleRevers());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                 }
                 break;
@@ -427,20 +428,20 @@ namespace DopLaba1
                 switch (INDEX_CURSOR)
                 {
                     case 1:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareAlphabet());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareAlphabet());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 2:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareCountBox());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareCountBox());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 3:
-                    MAIN_STORE.GetList().Sort(new ContainerComparePriority());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerComparePriority());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                     case 4:
-                    MAIN_STORE.GetList().Sort(new ContainerCompareDouble());
-                    graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                    MAIN_FACADE.GetList().Sort(new ContainerCompareDouble());
+                    graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                     break;
                 }
                 break;
@@ -529,7 +530,7 @@ namespace DopLaba1
                             }
                             try 
                             {
-                                MAIN_STORE.GenerateContainers(countGenerate, lowerBorderMaxCount, upperBorderMaxCount, lowerBorderMassBox, upperBorderMassBox, lowerBorderPrice, upperBorderPrice);
+                                MAIN_FACADE.GenerateContainers(countGenerate, lowerBorderMaxCount, upperBorderMaxCount, lowerBorderMassBox, upperBorderMassBox, lowerBorderPrice, upperBorderPrice);
                             }
                             catch (Exception e)
                             {
@@ -555,12 +556,12 @@ namespace DopLaba1
                             switch (LocalIndexCursor_CASE_1_CASE_7)
                             {
                                 case 1:
-                                int j = graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                                int j = graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                                 if (j >= 0)
                                 {
 
-                                    MyContainer mycontainer = MAIN_STORE.GetList()[j];
-                                    MAIN_STORE.GetList().Remove(mycontainer);
+                                    MyContainer mycontainer = MAIN_FACADE.GetList()[j];
+                                    MAIN_FACADE.GetList().Remove(mycontainer);
                                     List<string> LIST_REPLACEMENT_CONTAINER_CASE_1_CASE_7_CASE_1 = new List<string>(3);
                                     LIST_REPLACEMENT_CONTAINER_CASE_1_CASE_7_CASE_1.Add("Что меняем в контейнере?");
                                     LIST_REPLACEMENT_CONTAINER_CASE_1_CASE_7_CASE_1.Add("1 - Имя");
@@ -589,7 +590,7 @@ namespace DopLaba1
                                                 flagName = true;
                                             }
                                         }
-                                        foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
+                                        foreach (MyContainer myContainer1 in MAIN_FACADE.GetList())
                                         {
                                             if (myContainer1.GetName() == name)
                                             {
@@ -602,7 +603,7 @@ namespace DopLaba1
                                         }
                                         } while (flagName);
                                         mycontainer.SetName(name);
-                                        MAIN_STORE.GetList().Add(mycontainer);
+                                        MAIN_FACADE.GetList().Add(mycontainer);
                                         break;
                                         case 2:
                                             Console.WriteLine("Введите максимальное кол-во ящиков");
@@ -628,7 +629,7 @@ namespace DopLaba1
                                         } 
                                         while (count < 0 | (count < mycontainer.GetList().Count));
                                         mycontainer.SetCountBoxs(count);
-                                        MAIN_STORE.GetList().Add(mycontainer);
+                                        MAIN_FACADE.GetList().Add(mycontainer);
                                         break;
                                     }
                                 }
@@ -645,10 +646,10 @@ namespace DopLaba1
                                 do
                                 {
                                     flagCase2 = false;
-                                    b = graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                                    b = graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetStore());
                                     if (b >= 0)
                                     {
-                                        id = graphEngine.SelectElementFromTheStore(MAIN_STORE);
+                                        id = graphEngine.SelectElementFromTheStore(MAIN_FACADE.GetList()[b]);
                                     if (id == -2)
                                     {
                                         flagCase2 = true;
@@ -668,7 +669,7 @@ namespace DopLaba1
                                         case 1:
                                         string userData7;
                                         double mass;
-                                        BoxOfVegetables boxOfVegetables = MAIN_STORE.GetList()[b].GetList()[id];
+                                        BoxOfVegetables boxOfVegetables = MAIN_FACADE.GetList()[b].GetList()[id];
                                         do 
                                         {
                                             Console.WriteLine("Введите массу");
@@ -686,7 +687,7 @@ namespace DopLaba1
                                         while (mass < 0);
                                         try
                                         {
-                                            boxOfVegetables.ChangeMass(mass, MAIN_STORE.GetList()[b]);
+                                            MAIN_FACADE.ChangeMassBox(mass,boxOfVegetables, MAIN_FACADE.GetList()[b]);
                                         }
                                         catch (Exception e)
                                         {
@@ -712,10 +713,10 @@ namespace DopLaba1
                                             }
                                         } 
                                         while (price < 0);
-                                        BoxOfVegetables boxOfVegetables1 = MAIN_STORE.GetList()[b].GetList()[id];
+                                        BoxOfVegetables boxOfVegetables1 = MAIN_FACADE.GetList()[b].GetList()[id];
                                         try
                                         {
-                                            boxOfVegetables1.ChangePrice(price, MAIN_STORE.GetList()[b]);
+                                            MAIN_FACADE.ChangePriceBox(price,boxOfVegetables1, MAIN_FACADE.GetList()[b]);
                                         }
                                         catch (Exception e)
                                         {
@@ -775,7 +776,7 @@ namespace DopLaba1
                             }
                             if (EXISTENCE_STORE)
                             {
-                                foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
+                                foreach (MyContainer myContainer1 in MAIN_FACADE.GetList())
                                 {
                                     if (myContainer1.GetName() == name)
                                     {
@@ -815,8 +816,6 @@ namespace DopLaba1
                             INDEX_CURSOR = graphEngine.SelectElementFromTheStore(LIST_GROUND_BOXES);
                             try
                             {
-                            Console.WriteLine(j);
-                            Console.WriteLine(INDEX_CURSOR);
                             LIST_GROUND_CONTAINERS.GetList()[j].AddBox(LIST_GROUND_BOXES.GetList()[INDEX_CURSOR]);
                             LIST_GROUND_CONTAINERS.UpdateDataWitdth();
                             LIST_GROUND_CONTAINERS.UpdateData();
@@ -881,7 +880,7 @@ namespace DopLaba1
                                     }
                                     if (EXISTENCE_STORE)
                                     {
-                                        foreach (MyContainer myContainer1 in MAIN_STORE.GetList())
+                                        foreach (MyContainer myContainer1 in MAIN_FACADE.GetList() )
                                         {
                                             if (myContainer1.GetName() == name1)
                                             {
